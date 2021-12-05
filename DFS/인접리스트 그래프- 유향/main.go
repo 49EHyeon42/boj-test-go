@@ -2,14 +2,21 @@ package main
 
 import "fmt"
 
+var visited []bool
+
 func main() {
 	g := newGraph()
+
+	visited = make([]bool, 4+1)
+
 	g.Add(1, 2)
 	g.Add(1, 3)
 	g.Add(1, 4)
 	g.Add(2, 4)
 	g.Add(3, 4)
 	g.Print()
+
+	g.DFS(1)
 }
 
 func newNode(vertex int, link *node) node {
@@ -57,5 +64,16 @@ func (g graph) Print() {
 			link = link.link
 		}
 		fmt.Println()
+	}
+}
+
+func (g graph) DFS(value int) {
+	visited[value] = true
+	fmt.Printf("%d ", value)
+	for i := 0; i < len(g); i++ {
+		temp := g[i].link
+		if !visited[temp.vertex] {
+			g.DFS(temp.vertex)
+		}
 	}
 }
