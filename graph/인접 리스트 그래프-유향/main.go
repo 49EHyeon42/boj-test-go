@@ -2,15 +2,11 @@ package main
 
 import "fmt"
 
-var visited []bool
-
 func main() {
 	var edgeCount int
 	fmt.Scanln(&edgeCount)
 
 	g := newGraph()
-
-	visited = make([]bool, 4+1)
 
 	var firstVertex, secondVertex int
 	for i := 0; i < edgeCount; i++ {
