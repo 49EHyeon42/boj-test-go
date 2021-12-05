@@ -1,37 +1,37 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-)
-
-var (
-	reader = bufio.NewReader(os.Stdin)
-	writer = bufio.NewWriter(os.Stdout)
-	graph  [][]int
 )
 
 func main() {
 	var vertexCount, edgeCount int
-	fmt.Fscanln(reader, &vertexCount, &edgeCount)
+	fmt.Scanln(&vertexCount, &edgeCount)
 
-	graph = make([][]int, vertexCount+1)
-	for i := range graph {
-		graph[i] = make([]int, vertexCount+1)
-	}
+	g := newGraph(vertexCount)
 
 	var firstVertex, secondVertex, weight int
 	for i := 0; i < edgeCount; i++ {
-		fmt.Fscan(reader, &firstVertex, &secondVertex)
-		graph[firstVertex][secondVertex] = weight
+		fmt.Scan(&firstVertex, &secondVertex, &weight)
+		g.AddEdge(firstVertex, secondVertex, weight)
 	}
 
-	fmt.Fprintln(writer, graph)
-
-	writer.Flush()
+	fmt.Println(g)
 }
 
-/*
-인접행렬-유향 그래프
-*/
+func newGraph(vertexCount int) graph {
+	graph := make(graph, vertexCount)
+	for i := range graph {
+		graph[i] = make([]int, vertexCount)
+	}
+	return graph
+}
+
+type graph [][]int
+
+func (g *graph) AddEdge(firstVertex, secondVertex, weight int) {
+	// 가중치 관련 코드(거리, 중복 등)는 여기에 작성
+	(*g)[firstVertex-1][secondVertex-1] = weight
+}
+
+// 인접 행렬 그래프-유향-가중치
